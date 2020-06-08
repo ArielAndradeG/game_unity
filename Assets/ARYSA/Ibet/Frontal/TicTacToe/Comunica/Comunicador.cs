@@ -13,8 +13,14 @@ public class Comunicador : MonoBehaviour {
 			socket = go.GetComponent<SocketIOComponent>();
 		}
 
-		socket.On("foreignMessage", OnForeignMessage);
-		socket.On("open", OnSocketOpen);
+		go = GameObject.Find ("_TicTacToe");
+		if(go && !juego){
+			juego = go.GetComponent<TTT_Juego>();
+		}
+
+		socket.On("respuesta", OnRespuesta);
+		socket.On("gestion", OnGestion);
+		socket.On("acceso", OnAcceso);
 	}
 
 	public void Emitir(string metodo,Dictionary<string, string> mensaje){
@@ -26,11 +32,15 @@ public class Comunicador : MonoBehaviour {
 		socket.Emit(metodo, json);
 	}
 		
-	public void OnSocketOpen(SocketIOEvent ev){
-		Debug.Log("updated socket id " + socket.sid);
+	public void OnAcceso(SocketIOEvent ev){
+		juego.recibirGestion (ev);
 	}
 
-	public void OnForeignMessage(SocketIOEvent ev){
-		Debug.Log(string.Format("[ansewer: {0}]", ev.data));
+	public void OnGestion(SocketIOEvent ev){
+		juego.recibirGestion (ev);
+	}
+
+	public void OnRespuesta(SocketIOEvent ev){
+		juego.recibirRespuesta (ev);
 	}
 }

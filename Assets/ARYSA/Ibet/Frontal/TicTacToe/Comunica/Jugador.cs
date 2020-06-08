@@ -3,14 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Jugador : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	public string token;
+	public string nombre;
+	public string apuesta;
+	public string sesion;
 }
