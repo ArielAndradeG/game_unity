@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SocketIO;
 
 public class TTT_Juego : MonoBehaviour {
 	public Jugador yo;
@@ -27,14 +26,18 @@ public class TTT_Juego : MonoBehaviour {
 		}
 	}
 
-	public void recibirRespuesta(SocketIOEvent ev){
-		Debug.Log(ev.data);
+	public void emitirComunicado(string metodo, Dictionary<string, string> mensaje){
+		comunicador.Emitir(metodo,mensaje);
+	}	
+
+	public void recibirRespuesta(string ev){
+		Debug.Log(ev);
 		//en la respuesta de seteo de ficha
 		//tablero[renglon][columna] = valor;
 	}
 
-	public void recibirGestion(SocketIOEvent ev){
-		Debug.Log(ev.data.Count);
+	public void recibirGestion(string ev){
+		Debug.Log(ev);
 		//en la respuesta de actaulizar
 		//for->tablero[renglon][columna] = valor
 
@@ -49,8 +52,7 @@ public class TTT_Juego : MonoBehaviour {
 		data["tok"] = yo.token.ToString();
 		data["fil"] = fila.ToString();
 		data["col"] = coliumna.ToString();
-		//Debug.Log (new JSONObject (data));
-		comunicador.Emitir("movimiento", new JSONObject(data));
+		emitirComunicado("movimiento", data);
 	}
 
 	public void actualizar(){
@@ -58,8 +60,7 @@ public class TTT_Juego : MonoBehaviour {
 		data["nom"] = "Act";
 		data["ses"] = yo.sesion.ToString();
 		data["tok"] = yo.token.ToString();
-		//Debug.Log (new JSONObject (data));
-		comunicador.Emitir("gestion", new JSONObject(data));
+		emitirComunicado("gestion", data);
 	}
 
 	public void Acceder(){
@@ -68,8 +69,7 @@ public class TTT_Juego : MonoBehaviour {
 		data["ses"] = yo.sesion.ToString();
 		data["tok"] = yo.token.ToString();
 		data["nam"] = yo.nombre.ToString();
-		Debug.Log (new JSONObject (data));
-		comunicador.Emitir("acceder", new JSONObject(data));
+		emitirComunicado("acceder", data);
 		
 	}
 }

@@ -1,8 +1,12 @@
 *.meta
 Assets/SocketIO
 Assets/SocketIO.meta
+Assets/Best HTTP
+Assets/Best HTTP.meta
 
-.vscode/
+*.vscode
+*.csproj
+Temp
 game_unity.sln
 
 Library

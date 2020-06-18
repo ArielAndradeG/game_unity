@@ -26,6 +26,7 @@ public class Comunicador : MonoBehaviour {
 
 	public void Emitir(string metodo,Dictionary<string, string> mensaje){
 		JSONObject json = new JSONObject (mensaje);
+		//Debug.Log (new JSONObject (data));
 		socket.Emit(metodo, json);
 	}
 
@@ -34,17 +35,17 @@ public class Comunicador : MonoBehaviour {
 	}
 	public void OnAviso(SocketIOEvent ev){
 		Debug.Log("error");
-		juego.recibirRespuesta (ev);
+		//juego.recibirRespuesta (string.parse(ev.data));
 	}
 	public void OnAcceso(SocketIOEvent ev){
-		juego.recibirGestion (ev);
+		//juego.recibirGestion (ev.data.toString());
 	}
 
 	public void OnGestion(SocketIOEvent ev){
-		juego.recibirGestion (ev);
+		//juego.recibirGestion (ev.data.toString());
 	}
 
 	public void OnRespuesta(SocketIOEvent ev){
-		juego.recibirRespuesta (ev);
+		//juego.recibirRespuesta (ev.data.toString());
 	}
 }
