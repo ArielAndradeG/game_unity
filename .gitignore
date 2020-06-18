@@ -1,5 +1,10 @@
+*.meta
 Assets/SocketIO
 Assets/SocketIO.meta
+
+.vscode/
+game_unity.sln
+
 Library
 Logs
 obj

@@ -28,7 +28,7 @@ public class TTT_Juego : MonoBehaviour {
 	}
 
 	public void recibirRespuesta(SocketIOEvent ev){
-		Debug.Log(ev.data.GetField("message"));
+		Debug.Log(ev.data);
 		//en la respuesta de seteo de ficha
 		//tablero[renglon][columna] = valor;
 	}
@@ -44,7 +44,7 @@ public class TTT_Juego : MonoBehaviour {
 
 	public void tirar(int fila, int coliumna){
 		Dictionary<string, string> data = new Dictionary<string, string>();
-		data["nom"] = "Mov";
+		data["nom"] = "Tir";
 		data["ses"] = yo.sesion.ToString();
 		data["tok"] = yo.token.ToString();
 		data["fil"] = fila.ToString();
@@ -62,13 +62,14 @@ public class TTT_Juego : MonoBehaviour {
 		comunicador.Emitir("gestion", new JSONObject(data));
 	}
 
-	public void iniciar(){
+	public void Acceder(){
 		Dictionary<string, string> data = new Dictionary<string, string>();
 		data["nom"] = "Acc";
 		data["ses"] = yo.sesion.ToString();
 		data["tok"] = yo.token.ToString();
-		//Debug.Log (new JSONObject (data));
-		comunicador.Emitir("gestion", new JSONObject(data));
+		data["nam"] = yo.nombre.ToString();
+		Debug.Log (new JSONObject (data));
+		comunicador.Emitir("acceder", new JSONObject(data));
 		
 	}
 }

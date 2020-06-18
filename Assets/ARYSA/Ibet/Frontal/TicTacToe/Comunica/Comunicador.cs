@@ -21,6 +21,7 @@ public class Comunicador : MonoBehaviour {
 		socket.On("respuesta", OnRespuesta);
 		socket.On("gestion", OnGestion);
 		socket.On("acceso", OnAcceso);
+		socket.On("aviso", OnAviso);
 	}
 
 	public void Emitir(string metodo,Dictionary<string, string> mensaje){
@@ -31,7 +32,10 @@ public class Comunicador : MonoBehaviour {
 	public void Emitir(string metodo,JSONObject json){
 		socket.Emit(metodo, json);
 	}
-		
+	public void OnAviso(SocketIOEvent ev){
+		Debug.Log("error");
+		juego.recibirRespuesta (ev);
+	}
 	public void OnAcceso(SocketIOEvent ev){
 		juego.recibirGestion (ev);
 	}
