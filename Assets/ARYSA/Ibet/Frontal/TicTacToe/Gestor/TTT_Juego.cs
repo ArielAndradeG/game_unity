@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TTT_Juego : MonoBehaviour {
+public class TTT_Juego : MonoBehaviour,Gen_Juego {
 	public Jugador yo;
-	public Comunicador comunicador;
+	public Comunicador_best comunicador;
 	public string turno;
 	public string ganador;
 	public string simbolo;
@@ -17,7 +17,7 @@ public class TTT_Juego : MonoBehaviour {
 	void Start () {
 		GameObject go = GameObject.Find("_Comunicador");
 		if(go && !comunicador){
-			comunicador = go.GetComponent<Comunicador>();
+			comunicador = go.GetComponent<Comunicador_best>();
 		}
 
 		go = GameObject.Find("_yo");
@@ -26,8 +26,8 @@ public class TTT_Juego : MonoBehaviour {
 		}
 	}
 
-	public void emitirComunicado(string metodo, Dictionary<string, string> mensaje){
-		comunicador.Emitir(metodo,mensaje);
+	public void emitirRequest(string metodo, Dictionary<string, string> mensaje){
+		comunicador.EmitirRequest(metodo,mensaje);
 	}	
 
 	public void recibirRespuesta(string ev){
@@ -45,31 +45,57 @@ public class TTT_Juego : MonoBehaviour {
 		//for->tablero[renglon][columna] = valor
 	}
 
+	public void reiniciarTablero(){
+		tablero = new string[][]{
+			new string[] {".",".","."},
+			new string[] {".",".","."},
+			new string[] {".",".","."}
+		};
+		reconectar ();
+	}
+
 	public void tirar(int fila, int coliumna){
 		Dictionary<string, string> data = new Dictionary<string, string>();
-		data["nom"] = "Tir";
-		data["ses"] = yo.sesion.ToString();
-		data["tok"] = yo.token.ToString();
+		data["accion"] = "Tirar";
+		data["sesion"] = yo.sesion.ToString();
+		data["token"] = yo.token.ToString();
 		data["fil"] = fila.ToString();
 		data["col"] = coliumna.ToString();
-		emitirComunicado("movimiento", data);
+		emitirRequest("movimiento", data);
 	}
 
 	public void actualizar(){
 		Dictionary<string, string> data = new Dictionary<string, string>();
-		data["nom"] = "Act";
-		data["ses"] = yo.sesion.ToString();
-		data["tok"] = yo.token.ToString();
-		emitirComunicado("gestion", data);
+		data["accion"] = "Actualizar";
+		data["sesion"] = yo.sesion.ToString();
+		data["token"] = yo.token.ToString();
+		emitirRequest("gestion", data);
 	}
 
-	public void Acceder(){
+	public void acceder(){
 		Dictionary<string, string> data = new Dictionary<string, string>();
-		data["nom"] = "Acc";
-		data["ses"] = yo.sesion.ToString();
-		data["tok"] = yo.token.ToString();
-		data["nam"] = yo.nombre.ToString();
-		emitirComunicado("acceder", data);
-		
+		data["accion"] = "Acceder";
+		data["sesion"] = yo.sesion.ToString();
+		data["token"] = yo.token.ToString();
+		data["nombre"] = yo.nombre.ToString();
+		emitirRequest("gestion", data);
+	}
+
+	public bool esConexionActiva(){
+		return comunicador.estaActivo ();
+	}
+
+	public void reconectar(){
+		comunicador.Start ();
+		acceder ();
+		actualizar ();
+	}
+
+	public void escucharRespuesta(List<object> respuesta){
+		foreach (object str in respuesta) {
+			//Debug.Log (str.ToString());
+		}
+		JSONObject jo = new JSONObject ();
+		Debug.Log ("nueva--"+respuesta);
 	}
 }

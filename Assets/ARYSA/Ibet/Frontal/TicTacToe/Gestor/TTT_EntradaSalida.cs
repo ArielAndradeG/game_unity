@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TTT_EntradaSalida : MonoBehaviour {
 	public TTT_Juego juego;
 	public Text[] bloques;
+	public bool esActiva = false;
 
 	void Start () {
 		if(!juego){
@@ -14,7 +15,9 @@ public class TTT_EntradaSalida : MonoBehaviour {
 	}
 
 	void Update(){
-		RedibujarComponentes ();
+		if (esActiva) {
+			RedibujarComponentes ();
+		}
 	}
 
 	public void Tirar(string fila_coliumna){
@@ -23,8 +26,12 @@ public class TTT_EntradaSalida : MonoBehaviour {
 		int columna = int.Parse(valores[1]);
 		if(juego.tablero[renglon][columna] == "."){
 			juego.tirar(renglon,columna);
-			//setHueco(renglon,columna);
+			setHueco(renglon,columna);
 		}
+	}
+
+	public void Acceder(){
+		juego.acceder ();
 	}
 
 	public void Actualizar(){
@@ -38,7 +45,10 @@ public class TTT_EntradaSalida : MonoBehaviour {
 			int columna = int.Parse(valores[2]);
 			text.text = juego.tablero[renglon][columna];
 		}
-		
+	}
+
+	public void reiniciarComponetes(){
+		juego.reiniciarTablero ();
 	}
 
 	public void setHueco(int renglon, int columna){

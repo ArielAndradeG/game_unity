@@ -29,10 +29,7 @@ public class Comunicador : MonoBehaviour {
 		//Debug.Log (new JSONObject (data));
 		socket.Emit(metodo, json);
 	}
-
-	public void Emitir(string metodo,JSONObject json){
-		socket.Emit(metodo, json);
-	}
+		
 	public void OnAviso(SocketIOEvent ev){
 		Debug.Log("error");
 		//juego.recibirRespuesta (string.parse(ev.data));
