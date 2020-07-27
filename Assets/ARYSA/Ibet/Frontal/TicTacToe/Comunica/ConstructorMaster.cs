@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class Jugador : MonoBehaviour {
-	public string id;
-	public string alias;
-	public string nombre;
-	public string apuesta;
-	public string sesion;
-	public string token;
+public class ConstructorMaster : MonoBehaviour {
 	public ParametrosJuego parametrosJuego;
 
-	void Start () {
+	void Awake () {
 		Inicializar ();
+		Iniciar ();
+	}
+
+	void Iniciar(){
+		Type tipo = Type.GetType (parametrosJuego.tipoJuego);
+		GameObject.Find("_juego").AddComponent(tipo);
 	}
 
 	void Inicializar(){
@@ -20,6 +21,5 @@ public class Jugador : MonoBehaviour {
 		if(go && !parametrosJuego){
 			parametrosJuego = go.GetComponent<ParametrosJuego>();
 		}
-		this.token = parametrosJuego.token;
 	}
 }

@@ -9,8 +9,11 @@ public class TTT_EntradaSalida : MonoBehaviour {
 	public bool esActiva = false;
 
 	void Start () {
-		if(!juego){
-			juego = this.GetComponent<TTT_Juego>();
+		GameObject go = GameObject.Find("_juego");
+		if(go && !juego){
+			juego = go.GetComponent<TTT_Juego>();
+			Debug.Log (juego);
+			Debug.Log (go.GetComponent<TTT_Juego>());
 		}
 	}
 

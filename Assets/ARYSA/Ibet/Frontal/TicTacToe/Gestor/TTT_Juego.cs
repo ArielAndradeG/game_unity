@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class TTT_Juego : MonoBehaviour,Gen_Juego {
 	public Jugador yo;
-	public Comunicador_best comunicador;
+	public Jugador rival;
 	public string turno;
 	public string ganador;
-	public string simbolo;
+	public string miSimbolo;
+	public string suSimbolo;
+
+	public Comunicador_best comunicador;
 	public string[][] tablero = new string[][]{
 		new string[] {".",".","."},
 		new string[] {".",".","."},
@@ -15,7 +18,7 @@ public class TTT_Juego : MonoBehaviour,Gen_Juego {
 	};
 
 	void Start () {
-		GameObject go = GameObject.Find("_Comunicador");
+		GameObject go = GameObject.Find("_comunicador");
 		if(go && !comunicador){
 			comunicador = go.GetComponent<Comunicador_best>();
 		}
@@ -28,21 +31,6 @@ public class TTT_Juego : MonoBehaviour,Gen_Juego {
 
 	public void emitirRequest(string metodo, Dictionary<string, string> mensaje){
 		comunicador.EmitirRequest(metodo,mensaje);
-	}	
-
-	public void recibirRespuesta(string ev){
-		Debug.Log(ev);
-		//en la respuesta de seteo de ficha
-		//tablero[renglon][columna] = valor;
-	}
-
-	public void recibirGestion(string ev){
-		Debug.Log(ev);
-		//en la respuesta de actaulizar
-		//for->tablero[renglon][columna] = valor
-
-		//en la respuesta de loguear
-		//for->tablero[renglon][columna] = valor
 	}
 
 	public void reiniciarTablero(){

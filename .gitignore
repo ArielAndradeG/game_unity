@@ -1,4 +1,6 @@
 *.meta
+*.mat
+
 Assets/SocketIO
 Assets/SocketIO.meta
 Assets/Best HTTP
@@ -19,3 +21,9 @@ Assembly-CSharp-Editor.csproj
 
 CocinaHDRP.sln
 CocinaHDRP.userprefs
+
+Assets/Help.pdf
+Assets/More Assets.url
+Assets/temporal.unity
+Assets/unity3d.txt
+game_unity.userprefs
